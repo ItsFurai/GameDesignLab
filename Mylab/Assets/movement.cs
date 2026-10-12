@@ -13,14 +13,15 @@ public class movement : MonoBehaviour
     public float groundCheckRadius;
     public LayerMask whatIsGround;
     private bool grounded;
+    private Animator anim;
     void Start()
     {
-
+anim = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
-        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+
     }
 
     void Update()
@@ -39,6 +40,11 @@ public class movement : MonoBehaviour
                 GetComponent<SpriteRenderer>().flipX = true;
             }
         }
+         anim.SetFloat("Speed",Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x));
+         anim.SetFloat("Height", GetComponent<Rigidbody2D>().velocity.y);
+         anim.SetBool("Grounded", grounded);
+  grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+
 
         if (Input.GetKey(RightArrow))
         {
